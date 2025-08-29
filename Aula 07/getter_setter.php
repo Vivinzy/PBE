@@ -80,3 +80,5 @@ $aluno1 = new Pessoa("Vitoria", "123.456.789-00", "(11) 91234-5678", 20,
 
 echo $aluno1->getNome();
 echo $aluno1->getCpf();
+
+?>
