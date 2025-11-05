@@ -1,0 +1,16 @@
+{
+    "ice 51": {
+        "nome": "ice 51",
+        "categoria": "Destilado",
+        "volume": "500ml",
+        "valor": "12.00",
+        "qtde": "25"
+    },
+    "Draft": {
+        "nome": "Draft",
+        "categoria": "Vinho",
+        "volume": "1l",
+        "valor": "20.00",
+        "qtde": "163"
+    }
+}
