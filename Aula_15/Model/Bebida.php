@@ -1,21 +1,22 @@
 <?php
 namespace Aula_15;
 
-class Bebida {
-    private $nome;
+
+class Bebida { //atributos
+    private $nome; 
     private $categoria;
     private $volume;
     private $valor;
     private $qtde;
 
-    public function __construct($nome, $categoria, $volume, $valor, $qtde) {
+    public function __construct($nome, $categoria, $volume, $valor, $qtde) { //metodo construtor
         $this->nome = $nome;
         $this->categoria = $categoria;
         $this->volume = $volume;
         $this->valor = $valor;
         $this->qtde = $qtde;
     }
-    public function getNome()
+    public function getNome() //getters e setters
     {
         return $this->nome;
     }

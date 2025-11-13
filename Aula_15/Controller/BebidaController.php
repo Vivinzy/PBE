@@ -15,7 +15,6 @@ class BebidaController {
     }
 
     //lista todas as bebidas 
-
     public function ler() {
         return $this->dao->lerBebidas();
 

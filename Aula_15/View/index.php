@@ -1,13 +1,13 @@
-<?php
+<?php 
 
 namespace Aula_15;
 
 require_once __DIR__. '\\..\\Controller\\BebidaController.php';
 $controller = new BebidaController();
 
-if ($_SERVER ['REQUEST_METHOD'] === 'POST'){
-    $acao = $_POST['acao'] ?? '';
-    if ($acao === 'criar'){
+if ($_SERVER ['REQUEST_METHOD'] === 'POST'){ // verifica se o formulario foi submetido
+    $acao = $_POST['acao'] ?? ''; // obtém a ação do formulário
+    if ($acao === 'criar'){ // cria nova bebida
         $controller->criar(
             $_POST['nome'],
             $_POST['categoria'],
@@ -16,10 +16,10 @@ if ($_SERVER ['REQUEST_METHOD'] === 'POST'){
             $_POST['qtde']
         );
     } elseif ($acao === 'deletar'){
-        $controller->deletar($_POST['nome']);
+        $controller->deletar($_POST['nome']); // deleta a bebida pelo nome
     }
 }
-$bebidas = $controller->ler();
+$bebidas = $controller->ler(); // obtém a lista de bebidas
 ?>
 
 

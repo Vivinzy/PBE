@@ -4,10 +4,10 @@
 // Por último faça um index.php para testar a criação e manipulação dos objetos. Implemente a persistencia de dados com o arquivo 'produtos.json'
 namespace Aula_14;
 
-require_once "Produto.php";
+require_once "Produto.php"; // importa a classe Produto
 require_once "index.php";
 
-class ProdutosDAO {
+class ProdutosDAO { //atributo que guarda os produtos em um array
     private $Produtos = []; 
     private $arquivo = "Produtos.json"; 
 
@@ -32,7 +32,7 @@ class ProdutosDAO {
         }
     }
 
-    private function salvarEmArquivo() {
+    private function salvarEmArquivo() { // salva os dados do array no arquivo JSON
         $dados = [];
 
         foreach ($this->Produtos as $codigo => $Produto) {
@@ -43,11 +43,11 @@ class ProdutosDAO {
             ];
         }
 
-            file_put_contents($this->arquivo, json_encode($dados, JSON_PRETTY_PRINT));
+            file_put_contents($this->arquivo, json_encode($dados, JSON_PRETTY_PRINT)); // salva o array como JSON no arquivo
         }
 
 
-        public function criarProduto(Produtos $produtos){  
+        public function criarProduto(Produtos $produtos){  // adiciona novo produto ao array
             $this->Produtos[$produtos->getcodigo()] = $produtos;
             $this->salvarEmArquivo(); 
         }

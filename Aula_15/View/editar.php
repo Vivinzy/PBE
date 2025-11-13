@@ -2,34 +2,34 @@
 
 namespace Aula_15;
 
-require_once __DIR__. '\\..\\Controller\\BebidaController.php';
+require_once __DIR__. '\\..\\Controller\\BebidaController.php'; // ajustado para Windows
 
-$controller = new BebidaController();
+$controller = new BebidaController(); // instancia o controller
 
-$bebidaParaEditar = null;
-$nomeOriginal = ''; 
+$bebidaParaEditar = null; // bebida que sera editada
+$nomeOriginal = '';  // nome original da bebida
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['acao'] ?? '') === 'atualizar') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['acao'] ?? '') === 'atualizar') { // verifica se o formulario foi submetido para atualizar
     
-    $nomeOriginal = $_POST['nomeOriginal'] ?? '';
+    $nomeOriginal = $_POST['nomeOriginal'] ?? ''; // nome original da bebida
     $categoria    = $_POST['categoria'] ?? '';
     $volume       = $_POST['Volume'] ?? ''; 
     $valor        = $_POST['Valor'] ?? 0;  
     $qtde         = $_POST['qtde'] ?? 0;
 
-    $controller->editar($nomeOriginal, $categoria, $volume, $valor, $qtde);
+    $controller->editar($nomeOriginal, $categoria, $volume, $valor, $qtde); // chama o metodo editar do controller
     
-    header('Location: index.php');
+    header('Location: index.php'); // redireciona para a lista apos a edicao
     exit();
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nome'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nome'])) { // verifica se o nome da bebida foi enviado para edicao
     $nomeOriginal = $_POST['nome'];
     $bebidaParaEditar = $controller->buscar($nomeOriginal);
     
     // Se a bebida não for encontrada, algo deu errado, redireciona.
-    if (!$bebidaParaEditar) {
-        header('Location: index.php');
+    if (!$bebidaParaEditar) { // bebida nao encontrada
+        header('Location: index.php'); // redireciona
         exit();
     }
 } else {
