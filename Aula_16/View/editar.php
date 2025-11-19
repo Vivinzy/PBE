@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['acao'] ?? '') === 'atualiz
     exit();
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nome'])) { // verifica se o nome da bebida foi enviado para edicao
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nome'])) { 
     $nomeOriginal = $_POST['nome'];
     $bebidaParaEditar = $controller->buscar($nomeOriginal);
     
@@ -52,13 +52,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nome'])) { // verific
             padding: 10px;
             margin: 8px 0 16px 0;
             display: inline-block;
-            border: 1px solid #ccc;
+            border: 1px solid #ffc5ecff;
             border-radius: 4px;
             box-sizing: border-box;
         }
         button[type="submit"] {
             padding: 10px 20px; 
-            background-color: #ffd8faff; 
+            background-color: #e39dd9ff; 
             color: black; 
             border: none; 
             border-radius: 4px; 
@@ -75,6 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nome'])) { // verific
         
         <input type="hidden" name="nomeOriginal" value="<?php echo htmlspecialchars($nomeOriginal); ?>"> 
         
+        
         <label for="nome_display">Nome (Chave, não editável):</label>
         <input type="text" id="nome_display" value="<?php echo htmlspecialchars($bebidaParaEditar->getNome()); ?>" disabled> 
         
@@ -89,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nome'])) { // verific
             <option value="Água" <?php if ($currentCat === 'Água') echo 'selected'; ?>>Água</option>
             <option value="Suco" <?php if ($currentCat === 'Suco') echo 'selected'; ?>>Suco</option>
             <option value="Energético" <?php if ($currentCat === 'Energético') echo 'selected'; ?>>Energético</option>
-            
+
         </select>
         
         <label for="volume">Volume:</label>

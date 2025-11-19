@@ -57,7 +57,7 @@ $bebidas = $controller->ler(); // obtém a lista de bebidas
             flex-grow: 1; 
             min-width: 150px;
             padding: 10px;
-            border: 1px solid #ccc;
+            border: 1px solid #ffb8f2ff;
             border-radius: 4px;
             box-sizing: border-box;
             font-size: 14px;
@@ -98,14 +98,14 @@ $bebidas = $controller->ler(); // obtém a lista de bebidas
             width: 100%;
             border-collapse: collapse;
             margin-top: 30px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(230, 172, 204, 0.1);
             background-color: #fff;
         }
         
         th, td {
             padding: 12px 15px;
             text-align: left;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid #ffb5ebff;
         }
         
         th {
@@ -141,16 +141,16 @@ $bebidas = $controller->ler(); // obtém a lista de bebidas
             color: black;
         }
         .btn-editar:hover {
-            background-color: #ffc4e0ff;
+            background-color: #d99cb8ff;
         }
 
         /* Botão Excluir */
         .btn-deletar {
-            background-color: #d6b3ffff; 
+            background-color: #e8d4feff; 
             color: black;
         }
         .btn-deletar:hover {
-            background-color: #e3d3ffff;
+            background-color: #9d64ffff;
         }
 
         /* Alinhamento dos campos de ações */

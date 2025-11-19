@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['acao'] ?? '') === 'atualiz
     exit();
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nome'])) { // verifica se o nome da bebida foi enviado para edicao
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nome'])) { 
     $nomeOriginal = $_POST['nome'];
     $bebidaParaEditar = $controller->buscar($nomeOriginal);
     
