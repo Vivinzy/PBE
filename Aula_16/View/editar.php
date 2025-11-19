@@ -89,6 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nome'])) { // verific
             <option value="Água" <?php if ($currentCat === 'Água') echo 'selected'; ?>>Água</option>
             <option value="Suco" <?php if ($currentCat === 'Suco') echo 'selected'; ?>>Suco</option>
             <option value="Energético" <?php if ($currentCat === 'Energético') echo 'selected'; ?>>Energético</option>
+            
         </select>
         
         <label for="volume">Volume:</label>

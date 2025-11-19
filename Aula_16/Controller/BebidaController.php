@@ -7,8 +7,6 @@ require_once __DIR__. "\\..\\Model\\Bebida.php";
 class BebidaController {
     private $dao;
 
-    //contrutor: cria o objeto DAO (responsavel por salvar/carregar)
-
     public function __construct() {
         $this->dao = new BebidaDAO();
     }
@@ -29,21 +27,21 @@ class BebidaController {
     }
 
     // atualiza bebida existente
-
-    public function atualizar($nome, $valor, $qtde) {
-        $this->dao->atualizarBebida($nome, $valor, $qtde);
+    public function atualizar($nomeOriginal, $novoNome, $categoria, $volume, $valor, $qtde) {
+        $this->dao->atualizarBebida($nomeOriginal, $novoNome, $categoria, $volume, $valor, $qtde);
     }
 
     public function deletar($nome) {
-            $this->dao->excluirBebida($nome);
-        
-        }
-    
-    public function editar($nome, $categoria, $volume, $valor, $qtde) {
-        $this->dao->editarBebida($nome, $categoria, $volume, $valor, $qtde);    
+        $this->dao->excluirBebida($nome);
     }
+
+    // editar mantém o mesmo nome, atualiza os outros campos
+    public function editar($nome, $categoria, $volume, $valor, $qtde) {
+        $this->dao->atualizarBebida($nome, $nome, $categoria, $volume, $valor, $qtde);
+    }
+
     public function buscar($nome) {
-        return $this->dao->buscarBebidaPorNome($nome);
+        return $this->dao->buscarPorNome($nome);
     }
 }
 

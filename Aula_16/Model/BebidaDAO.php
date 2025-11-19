@@ -2,8 +2,6 @@
 
 namespace Aula_16;
 
-use Aula_16\Connection as Aula_16Connection;
-use Connection;
 use PDO;
 
 require_once 'Bebida.php';
@@ -13,7 +11,7 @@ class BebidaDAO {
     private $conn;
 
     public function __construct() {
-        $this->conn = Aula_16Connection::getInstance();
+        $this->conn = Connection::getInstance();
 
         // Cria a tabela se não existir
         $this->conn->exec("
@@ -27,6 +25,7 @@ class BebidaDAO {
             )
         ");
     }
+    
 
     // CREATE
     public function criarBebida(Bebida $bebida) {

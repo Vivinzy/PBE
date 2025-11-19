@@ -11,9 +11,9 @@ class Connection {
         try {
             //Ajuste se usuário e senha aqui
             $host = 'localhost';
-            $dbname = 'projeto_bebidas';
+            $dbname = 'SENAI';
             $user = 'root';
-            $pass = '1234';
+            $pass = 'senaisp';
 
 
             //conecta ao MySQL
