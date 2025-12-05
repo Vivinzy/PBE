@@ -1,5 +1,5 @@
 <?php
-namespace Aula_17;
+namespace Aula_18;
 
 require_once __DIR__. "\\..\\Model\\LivroDAO.php";
 require_once __DIR__. "\\..\\Model\\Livros.php";
@@ -43,6 +43,11 @@ class LivroController {
     public function buscar($titulo) {
         return $this->dao->buscarPorTitulo($titulo);
     }
+
+    public function buscarLivros($termo) {
+        return $this->dao->buscarLivros($termo);
+    }
+
 }
 
 ?>

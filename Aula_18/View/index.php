@@ -1,13 +1,14 @@
 <?php 
 
-namespace Aula_17;
+namespace Aula_18;
 
 require_once __DIR__. '\\..\\Controller\\LivroController.php';
 $controller = new LivroController();
 
-if ($_SERVER ['REQUEST_METHOD'] === 'POST'){ // verifica se o formulario foi submetido
-    $acao = $_POST['acao'] ?? ''; // obtém a ação do formulário
-    if ($acao === 'criar'){ // cria nova livro
+// Processar ações do formulário
+if ($_SERVER ['REQUEST_METHOD'] === 'POST'){ 
+    $acao = $_POST['acao'] ?? ''; 
+    if ($acao === 'criar'){ 
         $controller->criar(
             $_POST['titulo'],
             $_POST['genero'],
@@ -16,10 +17,17 @@ if ($_SERVER ['REQUEST_METHOD'] === 'POST'){ // verifica se o formulario foi sub
             $_POST['qtde']
         );
     } elseif ($acao === 'deletar'){
-        $controller->deletar($_POST['titulo']); // deleta a livro pelo titulo
+        $controller->deletar($_POST['titulo']); 
     }
 }
-$livros = $controller->ler(); // obtém a lista de livros
+
+// Processar busca
+$termoBusca = $_GET['busca'] ?? '';
+if (!empty($termoBusca)) {
+    $livros = $controller->buscarLivros($termoBusca);
+} else {
+    $livros = $controller->ler();
+}
 ?>
 
 
@@ -31,18 +39,18 @@ $livros = $controller->ler(); // obtém a lista de livros
     <title>Formulário de livros</title>
 </head>
 <body>
-   <style>
+<style>
     /* Estilos Gerais */
     body { 
-        font-family: 'Georgia', serif; /* Fonte clássica */
+        font-family: 'Georgia', serif;
         padding: 40px; 
-        background-color: #f7f3e8; /* Bege claro (papel antigo) */
-        color: #3e2723; /* Marrom escuro para o texto */
+        background-color: #fdf3f7; /* Rosa Pastel Muito Claro */
+        color: #262626; /* Preto Suave */
     }
     
     h1, h2 { 
-        color: #5d4037; /* Marrom mais quente para títulos */
-        border-bottom: 3px solid #bcaaa4; /* Linha de separação discreta (cor de madeira clara) */
+        color: #000000; /* Preto */
+        border-bottom: 3px solid #f0a8c2; /* Rosa Pastel Médio */
         padding-bottom: 12px;
         margin-top: 30px;
         font-weight: normal;
@@ -50,19 +58,18 @@ $livros = $controller->ler(); // obtém a lista de livros
         letter-spacing: 1px;
     }
 
-    /* Estilo do Formulário de Cadastro (Simula uma mesa ou balcão) */
+    /* Estilo do Formulário de Cadastro */
     form { 
-        background-color: #ffffff; /* Fundo branco/papel */
+        background-color: #ffffff;
         padding: 30px; 
         border-radius: 6px; 
         max-width: 650px; 
         margin: 25px 0; 
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Sombra suave */
-        border: 1px solid #d7ccc8; /* Borda fina para dar acabamento */
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        border: 1px solid #f0a8c2; /* Rosa Pastel Médio */
         display: flex;
         flex-wrap: wrap;
         gap: 20px;
-        display: flex;
         justify-content: center;
     }
 
@@ -77,33 +84,33 @@ $livros = $controller->ler(); // obtém a lista de livros
         display: block;
         margin-bottom: 5px;
         font-weight: bold;
-        color: #5d4037;
+        color: #000000; /* Preto */
         font-size: 15px;
     }
 
     input[type="text"], input[type="number"], select {
         width: 100%;
         padding: 10px 12px;
-        border: 1px solid #a1887f; /* Borda que remete à madeira escura */
+        border: 1px solid #f0a8c2; /* Rosa Pastel Médio */
         border-radius: 4px;
         box-sizing: border-box;
         font-size: 16px;
-        background-color: #fff8e1; /* Fundo levemente amarelado para os campos */
-        color: #3e2723;
+        background-color: #fff2f7; /* Rosa Pastel Leve */
+        color: #262626; /* Preto Suave */
         transition: border-color 0.3s;
     }
 
     input[type="text"]:focus, input[type="number"]:focus, select:focus {
-        border-color: #795548; /* Marrom de foco mais escuro */
+        border-color: #e66a98; /* Rosa Choque Suave */
         outline: none;
-        box-shadow: 0 0 0 2px rgba(121, 85, 72, 0.2);
+        box-shadow: 0 0 0 2px rgba(230, 106, 152, 0.3); /* Sombra do Foco Rosa */
     }
     
-    /* Botão de Cadastro (Simula um carimbo ou selo) */
+    /* Botão de Cadastro */
     .btn-cadastrar {
         height: 40px; 
         padding: 0 25px;
-        background-color: #795548 !important; /* Marrom de madeira */
+        background-color: #000000 !important; /* Preto */
         color: white !important; 
         border: none !important; 
         border-radius: 4px !important; 
@@ -114,21 +121,82 @@ $livros = $controller->ler(); // obtém a lista de livros
         text-transform: uppercase;
     }
     .btn-cadastrar:hover {
-        background-color: #5d4037 !important;
+        background-color: #262626 !important; /* Preto Suave */
         transform: translateY(-1px);
     }
 
-    /* Estilo da Tabela de Livros (Simula uma estante ou catálogo) */
+    /* Barra de Busca */
+    .search-container {
+        background-color: #ffffff;
+        padding: 20px 30px;
+        border-radius: 6px;
+        max-width: 650px;
+        margin: 25px 0;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        border: 1px solid #f0a8c2; /* Rosa Pastel Médio */
+        display: flex;
+        gap: 15px;
+        align-items: center;
+    }
+
+    .search-container input[type="text"] {
+        flex: 1;
+        margin: 0;
+    }
+
+    .btn-buscar {
+        padding: 10px 25px;
+        background-color: #000000; /* Preto */
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+        text-transform: uppercase;
+        transition: background-color 0.3s;
+        white-space: nowrap;
+    }
+
+    .btn-buscar:hover {
+        background-color: #262626; /* Preto Suave */
+    }
+
+    .btn-limpar {
+        padding: 10px 20px;
+        background-color: #f0a8c2; /* Rosa Pastel Médio */
+        color: #262626; /* Preto Suave */
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+        text-transform: uppercase;
+        transition: background-color 0.3s;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-limpar:hover {
+        background-color: #e66a98; /* Rosa Choque Suave */
+        color: white; /* Para dar mais contraste no hover */
+    }
+
+    .resultado-busca {
+        color: #000000; /* Preto */
+        font-style: italic;
+        margin: 10px 0;
+    }
+
+    /* Estilo da Tabela de Livros */
     table {
         width: 100%;
-        border-collapse: separate; /* Permite o border-spacing */
-        border-spacing: 0 5px; /* Espaçamento entre as linhas */
+        border-collapse: separate;
+        border-spacing: 0 5px;
         margin-top: 30px;
         background-color: transparent; 
     }
     
     thead th {
-        background-color: #5d4037; /* Cabeçalho em Marrom escuro (madeira de estante) */
+        background-color: #000000; /* Preto */
         color: white;
         text-transform: uppercase;
         font-size: 14px;
@@ -137,14 +205,15 @@ $livros = $controller->ler(); // obtém a lista de livros
     }
 
     tbody tr {
-        background-color: #ffffff; /* Fundo branco para cada livro */
+        background-color: #ffffff;
         border-radius: 4px;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
         transition: box-shadow 0.3s;
     }
 
     tbody tr:hover {
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Destaca o livro ao passar o mouse */
+        background-color: #fce4ec; /* Rosa Pastel Claro */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
     th, td {
@@ -153,7 +222,6 @@ $livros = $controller->ler(); // obtém a lista de livros
         border-bottom: none;
     }
     
-    /* Remove a cor zebrada antiga, usando a sombra na TR para diferenciar */
     tr:nth-child(even) {
         background-color: #ffffff; 
     }
@@ -174,7 +242,7 @@ $livros = $controller->ler(); // obtém a lista de livros
     
     .form-acao button[type="submit"] {
         padding: 7px 10px; 
-        border: 1px solid #795548; /* Borda marrom */
+        border: 1px solid #e66a98; /* Rosa Choque Suave */
         border-radius: 4px; 
         cursor: pointer;
         font-weight: bold;
@@ -186,86 +254,129 @@ $livros = $controller->ler(); // obtém a lista de livros
     /* Botão Excluir */
     .btn-deletar {
         background-color: #fff; 
-        color: #795548;
+        color: #e66a98; /* Rosa Choque Suave */
+        border-color: #f0a8c2; /* Rosa Pastel Médio */
     }
     .btn-deletar:hover {
-        background-color: #bcaaa4 !important; /* Marrom claro ao passar o mouse */
-        color: white !important;
-        border-color: #bcaaa4;
+        background-color: #f0a8c2 !important; /* Rosa Pastel Médio */
+        color: #262626 !important; /* Preto Suave */
+        border-color: #f0a8c2;
     }
 
     /* Botão Editar */
     .btn-editar {
-        background-color: #795548; 
+        background-color: #000000; /* Preto */
         color: white;
     }
     .btn-editar:hover {
-        background-color: #5d4037;
-        border-color: #5d4037;
+        background-color: #262626; /* Preto Suave */
+        border-color: #262626;
     }
 </style>
-    <h1>Formulário para preenchimento de livros</h1>
-    <form method="POST">
-    <input type="hidden" name="acao" value="criar">
-    <input type="text" name="titulo" placeholder="Titulo de livro:" required>
-    <select name="genero" required>
-        <option value="">Selecione a Genero</option>
-        <option value="Aventura">Aventura</option>
-        <option value="Romance">Romance</option>
-        <option value="Literatura Brasileira">Literatura Brasileira</option>
-        <option value="Terror">Terror</option>
-        <option value="Suspense">Suspense</option>
-        <option value="Comedia">Comedia</option>
-        <option value="Fantasia">Fantasia</option>
-</select>
-    <input type="text" name="Autor" placeholder="Autor:" required>
-    <input type="number" name="Ano" step="0.01" placeholder="Ano (Ex: 1999):" required>
-    <input type="number" name="qtde" placeholder="Quatidade em estoque:" required>
-    <?php
-    echo '<button type="submit" style="padding: 10px 20px; 
-    background-color: #ffd8faff;
-     color: black; 
-     border: none; 
-     border-radius: 4px; 
-     cursor: pointer;">Cadastrar</button>';
-    ?>
-    </form>
-    <h2>livros Cadastradas</h2>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Titulo</th>
-                <th>Genero</th>
-                <th>Autor</th>
-                <th>Ano</th>
-                <th>Quantidade</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($livros as $livro): ?>
-            <tr>
-                <td><?php echo htmlspecialchars($livro->getTitulo()); ?></td>
-                <td><?php echo htmlspecialchars($livro->getGenero()); ?></td>
-                <td><?php echo htmlspecialchars($livro->getAutor()); ?></td>
-                <td><?php echo htmlspecialchars($livro->getAno()); ?></td>
-                <td><?php echo htmlspecialchars($livro->getQtde()); ?></td>
-                <td>
-                    <form method="POST" class="form-acao" style="display: inline;">
-                        <input type="hidden" name="acao" value="deletar">
-                        <input type="hidden" name="titulo" value="<?php echo htmlspecialchars($livro->getTitulo()); ?>">
-                        <button type="submit" style="background-color: #d6b3ffff; border-radius: 4px; cursor: pointer;">Excluir</button>
-                    </form>
-                    <form method="POST" class="form-acao" action="editar.php" style="display: inline;">
-                       <input type="hidden" name="acao" value="editar">
-                        <input type="hidden" name="titulo" value="<?php echo htmlspecialchars($livro->getTitulo()); ?>">
-                        <button type="submit" style="background-color: #d6b3ffff; border-radius: 4px; cursor: pointer;">Editar</button>
-                    </form>
 
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+
+    <h1>Formulário para preenchimento de livros</h1>
+    
+    <form method="POST">
+        <input type="hidden" name="acao" value="criar">
+        <input type="text" name="titulo" placeholder="Titulo de livro:" required>
+        <select name="genero" required>
+            <option value="">Selecione a Genero</option>
+            <option value="Aventura">Aventura</option>
+            <option value="Romance">Romance</option>
+            <option value="Literatura Brasileira">Literatura Brasileira</option>
+            <option value="Terror">Terror</option>
+            <option value="Suspense">Suspense</option>
+            <option value="Comedia">Comedia</option>
+            <option value="Fantasia">Fantasia</option>
+        </select>
+        <input type="text" name="Autor" placeholder="Autor:" required>
+        <input type="number" name="Ano" step="0.01" placeholder="Ano (Ex: 1999):" required>
+        <input type="number" name="qtde" placeholder="Quatidade em estoque:" required>
+        <?php
+        echo '<button type="submit" style="padding: 10px 20px; 
+        background-color: #ffd8faff;
+         color: black; 
+         border: none; 
+         border-radius: 4px; 
+         cursor: pointer;">Cadastrar</button>';
+        ?>
+    </form>
+
+    <h2>Pesquisar Livros</h2>
+    
+    <!-- Barra de Busca -->
+    <form method="GET" class="search-container">
+        <input 
+            type="text" 
+            name="busca" 
+            placeholder="Buscar por título, autor ou gênero..." 
+            value="<?php echo htmlspecialchars($termoBusca); ?>"
+        >
+        <button type="submit" class="btn-buscar">🔍 Buscar</button>
+        <?php if (!empty($termoBusca)): ?>
+            <a href="index.php" class="btn-limpar">✕ Limpar</a>
+        <?php endif; ?>
+    </form>
+
+    <?php if (!empty($termoBusca)): ?>
+        <p class="resultado-busca">
+            <?php 
+            $total = count($livros);
+            echo "Encontrado(s) $total resultado(s) para: \"" . htmlspecialchars($termoBusca) . "\""; 
+            ?>
+        </p>
+    <?php endif; ?>
+
+    <h2>Livros Cadastrados</h2>
+    
+    <?php if (empty($livros)): ?>
+        <p style="color: #795548; font-style: italic; padding: 20px;">
+            <?php 
+            if (!empty($termoBusca)) {
+                echo "Nenhum livro encontrado com o termo \"" . htmlspecialchars($termoBusca) . "\".";
+            } else {
+                echo "Nenhum livro cadastrado ainda.";
+            }
+            ?>
+        </p>
+    <?php else: ?>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Titulo</th>
+                    <th>Genero</th>
+                    <th>Autor</th>
+                    <th>Ano</th>
+                    <th>Quantidade</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($livros as $livro): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($livro->getTitulo()); ?></td>
+                    <td><?php echo htmlspecialchars($livro->getGenero()); ?></td>
+                    <td><?php echo htmlspecialchars($livro->getAutor()); ?></td>
+                    <td><?php echo htmlspecialchars($livro->getAno()); ?></td>
+                    <td><?php echo htmlspecialchars($livro->getQtde()); ?></td>
+                    <td>
+                        <form method="POST" class="form-acao" style="display: inline;">
+                            <input type="hidden" name="acao" value="deletar">
+                            <input type="hidden" name="titulo" value="<?php echo htmlspecialchars($livro->getTitulo()); ?>">
+                            <button type="submit" style="background-color: #d6b3ffff; border-radius: 4px; cursor: pointer;">Excluir</button>
+                        </form>
+                        <form method="POST" class="form-acao" action="editar.php" style="display: inline;">
+                           <input type="hidden" name="acao" value="editar">
+                            <input type="hidden" name="titulo" value="<?php echo htmlspecialchars($livro->getTitulo()); ?>">
+                            <button type="submit" style="background-color: #d6b3ffff; border-radius: 4px; cursor: pointer;">Editar</button>
+                        </form>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php endif; ?>
+
 </body>
 </html>

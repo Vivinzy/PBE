@@ -1,6 +1,6 @@
 <?php
 
-namespace Aula_17;
+namespace Aula_18;
 
 use PDO;
 
@@ -28,16 +28,16 @@ class LivroDAO {
     
 
     // CREATE
-    public function criarLivros(Livros $livro) {
+    public function criarLivros(Livros $livros) {
         $stmt = $this->conn->prepare("
             INSERT INTO livros (titulo, genero, autor, ano, qtde)
             VALUES (:titulo, :genero, :autor, :ano, :qtde)");
         $stmt->execute([
-            ':titulo' => $livro->getTitulo(),
-            ':genero' => $livro->getGenero(),
-            ':autor' => $livro->getAutor(),
-            ':ano' => $livro->getAno(),
-            ':qtde' => $livro->getQtde()
+            ':titulo' => trim($livros->getTitulo()),
+            ':genero' => trim($livros->getGenero()),
+            ':autor' => trim($livros->getAutor()),
+            ':ano' => trim($livros->getAno()),
+            ':qtde' => trim($livros->getQtde())
         ]);
     }
 
@@ -95,5 +95,29 @@ class LivroDAO {
             );
         }
         return null;
+    }
+
+     public function buscarLivros($termo) {
+        $stmt = $this->conn->prepare("
+            SELECT * FROM livros 
+            WHERE titulo LIKE :termo 
+               OR autor LIKE :termo 
+               OR genero LIKE :termo 
+            ORDER BY titulo
+        ");
+        $termoBusca = '%' . $termo . '%';
+        $stmt->execute([':termo' => $termoBusca]);
+        
+        $result = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = new Livros(
+                $row['titulo'],
+                $row['genero'],
+                $row['autor'],
+                $row['ano'],
+                $row['qtde']
+            );
+        }
+        return $result;
     }
 }

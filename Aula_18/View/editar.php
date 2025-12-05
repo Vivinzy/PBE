@@ -1,6 +1,6 @@
 <?php
 
-namespace Aula_17;
+namespace Aula_18;
 
 require_once __DIR__. '\\..\\Controller\\LivroController.php'; // ajustado para Windows
 
@@ -44,28 +44,63 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['titulo'])) {
 <head>
     <meta charset="UTF-8">
     <title>Editar Livros</title>
-    <style>
-        body { font-family: sans-serif; padding: 20px; }
-        form { background: #f4f4f4; padding: 20px; border-radius: 8px; max-width: 400px; margin: 20px 0; }
-        input[type="text"], input[type="number"], select {
-            width: 100%;
-            padding: 10px;
-            margin: 8px 0 16px 0;
-            display: inline-block;
-            border: 1px solid #ffc5ecff;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        button[type="submit"] {
-            padding: 10px 20px; 
-            background-color: #e39dd9ff; 
-            color: black; 
-            border: none; 
-            border-radius: 4px; 
-            cursor: pointer;
-            font-weight: bold;
-        }
-    </style>
+   <style>
+    body { 
+        font-family: sans-serif; 
+        padding: 20px; 
+        background-color: #fdf3f7; /* Rosa Pastel Muito Claro */
+        color: #262626; /* Preto Suave para o Texto */
+    }
+    
+    form { 
+        background: #ffffff; /* Fundo Branco */
+        padding: 20px; 
+        border-radius: 8px; 
+        max-width: 400px; 
+        margin: 20px 0; 
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Adicionado sombra leve */
+    }
+    
+    input[type="text"], input[type="number"], select {
+        width: 100%;
+        padding: 10px;
+        margin: 8px 0 16px 0;
+        display: inline-block;
+        border: 1px solid #f0a8c2; /* Rosa Pastel Médio (Borda) */
+        border-radius: 4px;
+        box-sizing: border-box;
+        background-color: #fff2f7; /* Rosa Pastel Leve */
+        color: #262626;
+    }
+
+    input[type="text"]:focus, input[type="number"]:focus, select:focus {
+        border-color: #e66a98; /* Rosa Choque Suave no Foco */
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(230, 106, 152, 0.3);
+    }
+    
+    button[type="submit"] {
+        padding: 10px 20px; 
+        background-color: #000000; /* Preto */
+        color: white; /* Texto Branco */
+        border: none; 
+        border-radius: 4px; 
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #262626; /* Preto Suave no Hover */
+    }
+
+    label {
+        color: #000000; /* Preto para o Rótulo */
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+</style>
 </head>
 <body>
     <h1>Editar Livros: <?php echo htmlspecialchars($livroParaEditar->getTitulo()); ?></h1>
@@ -108,6 +143,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['titulo'])) {
         <button type="submit">Salvar Alterações</button>
     </form>
     
+
     <p><a href="index.php">Voltar para a lista</a></p>
 </body>
 </html>
