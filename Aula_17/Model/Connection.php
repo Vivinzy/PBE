@@ -5,9 +5,9 @@ use PDO;
 USE PDOException;
 
 class Connection {
-  private static $instance = null;
-  public static function getInstance() {
-    if (!self::$instance) {
+  private static $instance = null; // serve para armazenar a conexao
+  public static function getInstance() { // serve para conectar ao banco de dados
+    if (!self::$instance) { //serve para verificar se a conexao ja existe
         try {
             //Ajuste se usuário e senha aqui
             $host = 'localhost';
@@ -27,10 +27,10 @@ class Connection {
             self::$instance->exec("CREATE DATABASE IF NOT EXISTS $dbname CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci");
             self::$instance->exec("USE $dbname");
 
-        } catch (PDOException $e) {
+        } catch (PDOException $e) { //serve para tratar erros de conexao
             die("Erro ao conectar ao MySQL: " . $e->getMessage());
         }  
     }
-    return self::$instance;
+    return self::$instance; // serve para retornar a conexao
     }
 }

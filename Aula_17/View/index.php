@@ -32,143 +32,255 @@ $livro = $controller->ler();
     <title>Adicione seu Livro</title>
 </head>
 <body>
-    <style>
-        body {
-    font-family: sans-serif;
-    padding: 20px;
-} 
+<style>
+    /* 1. Alteração da Fonte para Moderna (Sans-Serif) */
+    body { 
+        font-family: 'Poppins', 'Helvetica Neue', Arial, sans-serif; /* Fonte Moderna */
+        padding: 40px; 
+        
+        /* 2. Cores: Rosa Pastel e Preto */
+        background-color: #fdf3f7; /* Rosa Pastel Muito Claro */
+        color: #262626; /* Preto Suave para o texto */
+    }
+    
+    h1, h2 { 
+        color: #000000; /* Preto */
+        border-bottom: 3px solid #f0a8c2; /* Rosa Pastel Médio */
+        padding-bottom: 12px;
+        margin-top: 30px;
+        font-weight: 600; /* Mais encorpado para moderno */
+        text-transform: uppercase;
+        letter-spacing: 2px; /* Mais espaçado */
+    }
+    
+    /* 3. Centralização dos Elementos Principais */
+    .container-centralizado {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Centraliza horizontalmente */
+    }
+
+    /* Estilo do Formulário de Cadastro */
     form { 
-    background-color: #d1d9ffff;
-    padding: 20px;
-    border-radius: 8px;
-    max-width: 400px;
-    margin: 20px 0;
-}
-        input[type="text"], input[type="number"], select {
-            width: 100%;
-            padding: 10px;
-            margin: 8px 0 16px 0;
-            display: inline-block;
-            border: 1px solid #000000ff;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        .form-acao {
-        background: none !important; /* remove o fundo */
-        padding: 0 !important; /* remove o padding */
-        box-shadow: none !important; /* remove a sombra */
-        display: inline-block !important; 
+        background-color: #ffffff;
+        padding: 30px; 
+        border-radius: 6px; 
+        max-width: 650px; 
+        /* Centralização - removido margin: 25px 0 e agora usa auto */
+        margin: 25px auto; 
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        border: 1px solid #f0a8c2; /* Rosa Pastel Médio */
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+    }
+
+    .form-group {
+        flex-grow: 1;
+        min-width: 200px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 600; /* Mais encorpado */
+        color: #000000; /* Preto */
+        font-size: 15px;
+    }
+
+    input[type="text"], input[type="number"], select {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #f0a8c2; /* Rosa Pastel Médio */
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 16px;
+        background-color: #fff2f7; /* Rosa Pastel Leve */
+        color: #262626; /* Preto Suave */
+        transition: border-color 0.3s;
+    }
+
+    input[type="text"]:focus, input[type="number"]:focus, select:focus {
+        border-color: #e66a98; /* Rosa Choque Suave no Foco */
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(230, 106, 152, 0.2); /* Sombra do Foco Rosa */
+    }
+    
+    /* Botão de Cadastro */
+    .btn-cadastrar {
+        height: 40px; 
+        padding: 0 25px;
+        background-color: #000000 !important; /* Preto */
+        color: white !important; 
+        border: none !important; 
+        border-radius: 4px !important; 
+        cursor: pointer !important;
+        font-weight: 600 !important;
+        transition: background-color 0.3s, transform 0.1s;
+        align-self: flex-end; 
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    .btn-cadastrar:hover {
+        background-color: #262626 !important; /* Preto Suave */
+        transform: translateY(-1px);
+    }
+
+    /* Barra de Busca */
+    .search-container {
+        background-color: #ffffff;
+        padding: 20px 30px;
+        border-radius: 6px;
+        max-width: 650px;
+        margin: 25px auto; /* Centralização */
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        border: 1px solid #f0a8c2; /* Rosa Pastel Médio */
+        display: flex;
+        gap: 15px;
+        align-items: center;
+    }
+
+    .search-container input[type="text"] {
+        flex: 1;
         margin: 0;
-}
-        /* Estilo do Formulário de Cadastro */
-        h1 { color: #333; }
-        
-        input[type="text"], input[type="number"], select {
-            flex-grow: 1; 
-            min-width: 150px;
-            padding: 10px;
-            border: 1px solid #ffb8f2ff;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 14px;
-        }
+    }
 
-        label {
-            display: block;
-            margin-top: 5px; /* Ajuste aqui */
-            font-weight: bold;
-            width: 100%; 
-            font-size: 14px;
-        }
+    .btn-buscar {
+        padding: 10px 25px;
+        background-color: #000000; /* Preto */
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: 600;
+        text-transform: uppercase;
+        transition: background-color 0.3s;
+        white-space: nowrap;
+        letter-spacing: 1px;
+    }
 
-        .form-group {
-            flex-grow: 1;
-            min-width: 150px;
-            /* Garante que o input e a label fiquem juntos */
-            display: flex;
-            flex-direction: column;
-        }
+    .btn-buscar:hover {
+        background-color: #262626; /* Preto Suave */
+    }
 
-        /* Botão para o Cadastro */
-        button[type="submit"].criar {
-            /* Fixa o tamanho do botão para alinhar melhor */
-            height: 40px; 
-            padding: 0 20px;
-            color: black; 
-            border: none; 
-            border-radius: 4px; 
-            cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.3s;
-            margin-top: 15px; /* Empurra para baixo para alinhar com os inputs */
-        }
-        
-        /* Estilo da Tabela de Bebidas (as cadastradas) */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 30px;
-            box-shadow: 0 4px 8px rgba(230, 172, 204, 0.1);
-            background-color: #fff;
-        }
-        
-        th, td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid #ffb5ebff;
-        }
-        
-        th {
-            background-color: #ffdaeeff;
-            color: black;
-            text-transform: uppercase;
-        }
-        
-        tr:nth-child(even) {
-            background-color: #f4f4f4; /* Linhas zebradas */
-        }
-        
-        /* Estilo dos botões de Ações (Editar e Excluir) */
-        td:last-child {
-            /* Garante que a coluna Ações não fique muito estreita */
-            white-space: nowrap; 
-            width: 1%;
-        }
+    .btn-limpar {
+        padding: 10px 20px;
+        background-color: #f0a8c2; /* Rosa Pastel Médio */
+        color: #000000; /* Preto */
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: 600;
+        text-transform: uppercase;
+        transition: background-color 0.3s;
+        text-decoration: none;
+        display: inline-block;
+        letter-spacing: 1px;
+    }
 
-        button[type="submit"] {
-            padding: 8px 12px; 
-            border: none; 
-            border-radius: 4px; 
-            cursor: pointer;
-            font-weight: bold;
-            margin-right: 5px; 
-            transition: background-color 0.3s;
-        }
+    .btn-limpar:hover {
+        background-color: #e66a98; /* Rosa Choque Suave */
+        color: white; 
+    }
 
-        /* Botão Editar */
-        .btn-editar {
-            background-color: #ffd8faff; 
-            color: black;
-        }
-        .btn-editar:hover {
-            background-color: #d99cb8ff;
-        }
+    .resultado-busca {
+        color: #000000; /* Preto */
+        font-style: italic;
+        margin: 10px 0;
+    }
 
-        /* Botão Excluir */
-        .btn-deletar {
-            background-color: #e8d4feff; 
-            color: black;
-        }
-        .btn-deletar:hover {
-            background-color: #9d64ffff;
-        }
+    /* Estilo da Tabela de Livros */
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 5px;
+        margin-top: 30px;
+        background-color: transparent; 
+    }
+    
+    thead th {
+        background-color: #000000; /* Preto */
+        color: white;
+        text-transform: uppercase;
+        font-size: 14px;
+        border: none;
+        padding: 15px;
+        font-weight: 600;
+    }
 
-        /* Alinhamento dos campos de ações */
-        td {
-            vertical-align: middle;
-        }
+    tbody tr {
+        background-color: #ffffff;
+        border-radius: 4px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        transition: box-shadow 0.3s, background-color 0.3s;
+    }
 
-    </style>
+    tbody tr:hover {
+        background-color: #fff2f7; /* Rosa Pastel Leve no Hover */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: none;
+    }
+    
+    tr:nth-child(even) {
+        background-color: #fcfcfc; /* Alternativa de branco muito leve */
+    }
+
+    /* Estilo dos Botões de Ações */
+    td:last-child {
+        white-space: nowrap; 
+        width: 1%;
+    }
+
+    .form-acao {
+        background: none !important; 
+        padding: 0 !important; 
+        box-shadow: none !important; 
+        display: inline-block !important; 
+        margin: 0 5px 0 0;
+    }
+    
+    .form-acao button[type="submit"] {
+        padding: 7px 10px; 
+        border: 1px solid #e66a98; /* Rosa Choque Suave */
+        border-radius: 4px; 
+        cursor: pointer;
+        font-weight: 600;
+        transition: background-color 0.3s;
+        font-size: 13px;
+        text-transform: uppercase;
+    }
+    
+    /* Botão Excluir */
+    .btn-deletar {
+        background-color: #fff; 
+        color: #e66a98; /* Rosa Choque Suave */
+        border-color: #f0a8c2;
+    }
+    .btn-deletar:hover {
+        background-color: #f0a8c2 !important; /* Rosa Pastel Médio */
+        color: #000000 !important; /* Preto */
+        border-color: #f0a8c2;
+    }
+
+    /* Botão Editar */
+    .btn-editar {
+        background-color: #000000; /* Preto */
+        color: white;
+        border-color: #000000;
+    }
+    .btn-editar:hover {
+        background-color: #262626; /* Preto Suave */
+        border-color: #262626;
+    }
+</style>
 <h1>Formulário para preenchimento de Livros</h1>
     <form method="POST">
         <input type="hidden" name="acao" value="criar">

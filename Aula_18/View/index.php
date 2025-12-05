@@ -40,12 +40,14 @@ if (!empty($termoBusca)) {
 </head>
 <body>
 <style>
-    /* Estilos Gerais */
+    /* 1. Alteração da Fonte para Moderna (Sans-Serif) */
     body { 
-        font-family: 'Georgia', serif;
+        font-family: 'Poppins', 'Helvetica Neue', Arial, sans-serif; /* Fonte Moderna */
         padding: 40px; 
+        
+        /* 2. Cores: Rosa Pastel e Preto */
         background-color: #fdf3f7; /* Rosa Pastel Muito Claro */
-        color: #262626; /* Preto Suave */
+        color: #262626; /* Preto Suave para o texto */
     }
     
     h1, h2 { 
@@ -53,9 +55,16 @@ if (!empty($termoBusca)) {
         border-bottom: 3px solid #f0a8c2; /* Rosa Pastel Médio */
         padding-bottom: 12px;
         margin-top: 30px;
-        font-weight: normal;
+        font-weight: 600; /* Mais encorpado para moderno */
         text-transform: uppercase;
-        letter-spacing: 1px;
+        letter-spacing: 2px; /* Mais espaçado */
+    }
+    
+    /* 3. Centralização dos Elementos Principais */
+    .container-centralizado {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Centraliza horizontalmente */
     }
 
     /* Estilo do Formulário de Cadastro */
@@ -64,7 +73,8 @@ if (!empty($termoBusca)) {
         padding: 30px; 
         border-radius: 6px; 
         max-width: 650px; 
-        margin: 25px 0; 
+        /* Centralização - removido margin: 25px 0 e agora usa auto */
+        margin: 25px auto; 
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         border: 1px solid #f0a8c2; /* Rosa Pastel Médio */
         display: flex;
@@ -83,7 +93,7 @@ if (!empty($termoBusca)) {
     label {
         display: block;
         margin-bottom: 5px;
-        font-weight: bold;
+        font-weight: 600; /* Mais encorpado */
         color: #000000; /* Preto */
         font-size: 15px;
     }
@@ -101,9 +111,9 @@ if (!empty($termoBusca)) {
     }
 
     input[type="text"]:focus, input[type="number"]:focus, select:focus {
-        border-color: #e66a98; /* Rosa Choque Suave */
+        border-color: #e66a98; /* Rosa Choque Suave no Foco */
         outline: none;
-        box-shadow: 0 0 0 2px rgba(230, 106, 152, 0.3); /* Sombra do Foco Rosa */
+        box-shadow: 0 0 0 3px rgba(230, 106, 152, 0.2); /* Sombra do Foco Rosa */
     }
     
     /* Botão de Cadastro */
@@ -115,10 +125,11 @@ if (!empty($termoBusca)) {
         border: none !important; 
         border-radius: 4px !important; 
         cursor: pointer !important;
-        font-weight: bold !important;
+        font-weight: 600 !important;
         transition: background-color 0.3s, transform 0.1s;
         align-self: flex-end; 
         text-transform: uppercase;
+        letter-spacing: 1px;
     }
     .btn-cadastrar:hover {
         background-color: #262626 !important; /* Preto Suave */
@@ -131,7 +142,7 @@ if (!empty($termoBusca)) {
         padding: 20px 30px;
         border-radius: 6px;
         max-width: 650px;
-        margin: 25px 0;
+        margin: 25px auto; /* Centralização */
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         border: 1px solid #f0a8c2; /* Rosa Pastel Médio */
         display: flex;
@@ -151,10 +162,11 @@ if (!empty($termoBusca)) {
         border: none;
         border-radius: 4px;
         cursor: pointer;
-        font-weight: bold;
+        font-weight: 600;
         text-transform: uppercase;
         transition: background-color 0.3s;
         white-space: nowrap;
+        letter-spacing: 1px;
     }
 
     .btn-buscar:hover {
@@ -164,20 +176,21 @@ if (!empty($termoBusca)) {
     .btn-limpar {
         padding: 10px 20px;
         background-color: #f0a8c2; /* Rosa Pastel Médio */
-        color: #262626; /* Preto Suave */
+        color: #000000; /* Preto */
         border: none;
         border-radius: 4px;
         cursor: pointer;
-        font-weight: bold;
+        font-weight: 600;
         text-transform: uppercase;
         transition: background-color 0.3s;
         text-decoration: none;
         display: inline-block;
+        letter-spacing: 1px;
     }
 
     .btn-limpar:hover {
         background-color: #e66a98; /* Rosa Choque Suave */
-        color: white; /* Para dar mais contraste no hover */
+        color: white; 
     }
 
     .resultado-busca {
@@ -202,17 +215,18 @@ if (!empty($termoBusca)) {
         font-size: 14px;
         border: none;
         padding: 15px;
+        font-weight: 600;
     }
 
     tbody tr {
         background-color: #ffffff;
         border-radius: 4px;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-        transition: box-shadow 0.3s;
+        transition: box-shadow 0.3s, background-color 0.3s;
     }
 
     tbody tr:hover {
-        background-color: #fce4ec; /* Rosa Pastel Claro */
+        background-color: #fff2f7; /* Rosa Pastel Leve no Hover */
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
@@ -223,7 +237,7 @@ if (!empty($termoBusca)) {
     }
     
     tr:nth-child(even) {
-        background-color: #ffffff; 
+        background-color: #fcfcfc; /* Alternativa de branco muito leve */
     }
 
     /* Estilo dos Botões de Ações */
@@ -245,7 +259,7 @@ if (!empty($termoBusca)) {
         border: 1px solid #e66a98; /* Rosa Choque Suave */
         border-radius: 4px; 
         cursor: pointer;
-        font-weight: bold;
+        font-weight: 600;
         transition: background-color 0.3s;
         font-size: 13px;
         text-transform: uppercase;
@@ -255,11 +269,11 @@ if (!empty($termoBusca)) {
     .btn-deletar {
         background-color: #fff; 
         color: #e66a98; /* Rosa Choque Suave */
-        border-color: #f0a8c2; /* Rosa Pastel Médio */
+        border-color: #f0a8c2;
     }
     .btn-deletar:hover {
         background-color: #f0a8c2 !important; /* Rosa Pastel Médio */
-        color: #262626 !important; /* Preto Suave */
+        color: #000000 !important; /* Preto */
         border-color: #f0a8c2;
     }
 
@@ -267,6 +281,7 @@ if (!empty($termoBusca)) {
     .btn-editar {
         background-color: #000000; /* Preto */
         color: white;
+        border-color: #000000;
     }
     .btn-editar:hover {
         background-color: #262626; /* Preto Suave */

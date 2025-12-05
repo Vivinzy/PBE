@@ -10,7 +10,7 @@ class Livro { //atributos
     private $genero;
     private $quantidade;
 
-    public function __construct($id, $titulo, $autor, $ano, $genero, $quantidade) { 
+    public function __construct($id, $titulo, $autor, $ano, $genero, $quantidade) { //serve para inicializar os atributos
     $this->id = $id;
     $this->titulo = $titulo;
     $this->autor = $autor;
@@ -18,9 +18,9 @@ class Livro { //atributos
     $this->genero = $genero;
     $this->quantidade = $quantidade;
 }
-    public function getId() 
+    public function getId() // servem para acessar os atributos
     {
-        return $this->id;
+        return $this->id; //retorna o valor do atributo id
     }
     public function setId($id)
     {

@@ -11,7 +11,7 @@ class LivroDAO {
     private $conn;
 
     public function __construct() {
-        $this->conn = Connection::getInstance();
+        $this->conn = Connection::getInstance(); //serve para obter a conexão com o banco de dados
 
         // Cria a tabela se não existir
         $this->conn->exec("
@@ -113,6 +113,6 @@ public function buscarPorId($id): Livro|null {
                 $row['quantidade']
             );
         }
-        return null;
+        return null; //retorna null se não encontrar o livro //oq é null // nul
     }
 }
